@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O que resiste à dúvida? · René Descartes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f5f3ef;
+            --surface-card: #ffffff;
+            --primary: #0f172a;
+            --accent-gold: #b45309;
+            --accent-blue: #1e3a8a;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Banner Header */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .descartes-portrait {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .header-title h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            letter-spacing: 2px;
+            color: #f8fafc;
+        }
+
+        .header-title span {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header-btns button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .header-btns button:hover {
+            background: #f59e0b;
+            color: #0f172a;
+            border-color: #f59e0b;
+        }
+
+        /* Main Area */
+        main {
+            max-width: 850px;
+            margin: 2rem auto;
+            width: 100%;
+            padding: 0 1.5rem;
+            flex: 1;
+        }
+
+        .card {
+            background: var(--surface-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .step-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: #fef3c7;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+        }
+
+        .main-question {
+            font-family: 'Source Serif 4', serif;
+            font-size: 2.25rem;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .sub-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Illustrations Inside Cards */
+        .card-illustration {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.75rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-toggle {
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            padding: 0.7rem 1.3rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-toggle:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-toggle.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Display Content Box */
+        .display-box {
+            display: none;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.75rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .display-box.active {
+            display: block;
+        }
+
+        .display-box h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .display-box p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        .display-box blockquote {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.7;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 1rem;
+            color: #334155;
+            margin: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer Nav */
+        footer {
+            border-top: 1px solid var(--border);
+            background: var(--surface-card);
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        select {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .counter {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btns button {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .nav-btns button.primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .nav-btns button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-brand">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg" alt="René Descartes" class="descartes-portrait">
+            <div class="header-title">
+                <h1>RENÉ DESCARTES</h1>
+                <span>SEGUNDA MEDITAÇÃO · O COGITO</span>
+            </div>
+        </div>
+        <div class="header-btns">
+            <button onclick="alert('Instruções: Navegue pelas etapas da investigação no menu inferior. Clique nos botões para aprofundar a reflexão e consultar o texto original de Descartes.')">Como usar</button>
+            <button onclick="toggleFullscreen()">Ecrã inteiro</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="step-tag" id="stepTag">INVESTIGAÇÃO · 01</div>
+            <h1 class="main-question" id="mainQuestion">A Procura do Ponto Firme</h1>
+            <p class="sub-description" id="subDescription">Arquimedes pedia um ponto firme e imóvel para mover a Terra. O que procura o meditador ao regressar ao caminho da dúvida?</p>
+
+            <!-- Imagem Temática Dinâmica -->
+            <img id="cardImage" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1000&auto=format&fit=crop" alt="Edifício / Fundações" class="card-illustration">
+
+            <div class="action-btns">
+                <button class="btn-toggle" onclick="toggleContent('aprofundar')">Aprofundar</button>
+                <button class="btn-toggle" onclick="toggleContent('descartes')">Ler Descartes</button>
+                <button class="btn-toggle" onclick="toggleContent('sistematizar')">Sistematizar</button>
+            </div>
+
+            <div class="display-box" id="displayBox">
+                <h4 id="boxTitle">Conteúdo</h4>
+                <div id="boxText"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <select id="stepSelect" onchange="jumpToStep(this.value)">
+            <option value="0">1 · O Ponto de Arquimedes</option>
+            <option value="1">2 · A Certeza do Ego Sum</option>
+            <option value="2">3 · A Hipótese do Enganador</option>
+            <option value="3">4 · Recusa de Aristóteles</option>
+            <option value="4">5 · Delimitar a Descoberta</option>
+            <option value="5">6 · O tempo da existência</option>
+            <option value="6">7 · A Coisa Pensante</option>
+            <option value="7">8 · Os modos de pensar</option>
+            <option value="8">9 · A Ilusão da Imaginação</option>
+            <option value="9">10 · O Exemplo da Cera</option>
+            <option value="10">11 · A Inspeção da Mente</option>
+            <option value="11">12 · Superioridade do Intelecto</option>
+        </select>
+
+        <div class="counter" id="stepCounter">1 / 12</div>
+
+        <div class="nav-btns">
+            <button id="prevBtn" onclick="navigate(-1)" disabled>← Anterior</button>
+            <button id="nextBtn" class="primary" onclick="navigate(1)">Seguinte →</button>
+        </div>
+    </footer>
+
+    <script>
+        const steps = [
+            {
+                tag: "INVESTIGAÇÃO · 01",
+                question: "O Ponto de Arquimedes e o Fundamento",
+                sub: "Arquimedes pedia um ponto firme para mover a Terra. O que procura o meditador para sair do poço da dúvida?",
+                img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1000&auto=format&fit=crop", // Edifício / Fundações
+                aprofundar: "O meditador procura encontrar uma crença indubitável que se auto-sustente para reconstruir um novo edifício do conhecimento com uma crença básica e autojustificada.",
+                descartes: "«Arquimedes não pedia mais que um ponto, que fosse firme e imóvel, para poder remover a terra inteira de seu lugar: são grandes também as minhas esperanças, se vier a encontrar algo, o mais mínimo, que seja certo e inabalável.» (§2)",
+                sistematizar: "• Dúvida Metódica e Hiperbólica.<br>• Objetivo: Encontrar a crença fundacional.<br>• Metáfora do Ponto Firme e do Edifício."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 02",
+                question: "A Certeza da Própria Existência",
+                sub: "Se duvido de todos os meus sentidos e do meu corpo, restará alguma coisa da qual não possa duvidar?",
+                img: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1000&auto=format&fit=crop", // Escrita e reflexão
+                aprofundar: "Do próprio ato de pensar e produzir pensamentos emerge a primeira certeza: o meditador descobre o solo para o ser a partir da atividade de pensar.",
+                descartes: "«Não sou, portanto, eu pelo menos, algo? ... Ao contrário, eu certamente era, se me persuadi de algo ou se somente pensei algo.» (§4)",
+                sistematizar: "• Negação dos sentidos e do corpo.<br>• O ato de pensar exige um sujeito.<br>• Do pensar ao ser (*cogito*)."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 03",
+                question: "Mesmo se for Enganado, Eu Sou?",
+                sub: "Se existir um Génio Maligno sumamente poderoso a enganar-me sempre, posso ser 'nada'?",
+                img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1000&auto=format&fit=crop", // Sombra / Mistério
+                aprofundar: "A hipótese do engano radical prova a existência do Eu. Se alguém me engana, eu sou algo. O enunciado 'Eu sou, eu existo' é necessariamente verdadeiro sempre que pensado.",
+                descartes: "«Não há dúvida, portanto, de que eu, eu sou, também, se me engana: que me engane o quanto possa, nunca poderá fazer, porém, que eu nada seja, enquanto eu pensar que sou algo... Ego sum, ego existo.» (§4)",
+                sistematizar: "• Prova pela alteridade do engano.<br>• Enganar-me exige a minha existência.<br>• Validade necessária enquanto pensado."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 04",
+                question: "O Homem é um 'Animal Racional'?",
+                sub: "O meditador sabe QUE é. Mas saberá já QUEM é? Servirá a definição clássica escolástica?",
+                img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1000&auto=format&fit=crop", // Livros antigos / Biblioteca
+                aprofundar: "Descartes rejeita a definição de Aristóteles porque obrigaria a definir 'animal' e 'racional', resvalando para questões intermináveis e obscuras.",
+                descartes: "«Que acreditei ser, portanto, até agora? Um homem, decerto. Mas, que é um homem? Direi, acaso, um animal racional? Não, porque seria preciso perguntar em seguida que é um animal e que é racional...» (§5)",
+                sistematizar: "• Rejeição da Escolástica/Aristóteles.<br>• Evitar o regresso infinito de definições.<br>• Procura de um conhecimento direto."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 05",
+                question: "Se sei que existo, já sei o que sou?",
+                sub: "Avaliem três conclusões: «Existo enquanto penso»; «Tenho um corpo»; «Não tenho corpo». Quais estão justificadas neste momento?",
+                img: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1000&auto=format&fit=crop", // Filosofia / Estudo
+                aprofundar: "Nesta etapa, o meditador conclui apenas a sua existência enquanto pensar. A posse de corpo continua posta em dúvida pela hipótese do sonho ou do engano.",
+                descartes: "«Pensar? Encontrei: há o pensamento, e somente ele não pode ser separado de mim. Eu, eu sou, eu, eu existo, isto é certo. Mas, por quanto tempo? Ora, tempo enquanto penso...» (§7)",
+                sistematizar: "• Justificada: 'Existo enquanto penso'.<br>• Não demonstrada ainda: existência do corpo.<br>• O pensamento é o único atributo inseparável."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 06",
+                question: "Durante quanto tempo existo?",
+                sub: "A certeza da existência do Eu é permanente para o futuro ou está ligada ao ato presente?",
+                img: "https://images.unsplash.com/photo-1501139083538-0139583c060f?q=80&w=1000&auto=format&fit=crop", // Ampulheta / Tempo
+                aprofundar: "A certeza da existência é assegurada unicamente durante o tempo em que a atividade de pensar está a ocorrer na mente.",
+                descartes: "«Eu, eu sou, eu, eu existo, isto é certo. Mas, por quanto tempo? Ora, tempo enquanto penso, pois talvez pudesse ocorrer também que, se eu já não tivesse nenhum pensamento, deixasse totalmente de ser.» (§7)",
+                sistematizar: "• Existência temporalmente delimitada.<br>• Dependência do ato de pensar.<br>• A mente enquanto *res cogitans*."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 07",
+                question: "O que é uma Coisa Pensante?",
+                sub: "Que vocábulos e conceitos descrevem esta nova substância descoberta?",
+                img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1000&auto=format&fit=crop", // Mente e Luz
+                aprofundar: "O Eu verdadeiro é apenas uma *res cogitans* (mente, ânimo, intelecto ou razão). A sua certeza mantém-se sem recorrer a elementos da natureza (vento, ar, fogo).",
+                descartes: "«Sou, portanto, precisamente, só uma coisa pensante, isto é, mente ou ânimo ou intelecto ou razão... Sou, porém, uma coisa verdadeira e verdadeiramente existente.» (§7)",
+                sistematizar: "• Definição da *Res Cogitans*.<br>• Independência de substâncias corporais.<br>• Fundação do sujeito moderno."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 08",
+                question: "Quais são as atividades do Pensamento?",
+                sub: "O que faz a mente quando pensa? Como se relacionam as faculdades da *res cogitans*?",
+                img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1000&auto=format&fit=crop", // Escrita e raciocínio
+                aprofundar: "Pensar envolve duvidar, entender, afirmar, negar, querer, não querer, imaginar e sentir. O sentir e o imaginar pertencem à mente enquanto modos de pensar.",
+                descartes: "«Que é isto? A saber, coisa que duvida, que entende, que afirma, que nega, que quer, que não quer, que imagina também e que sente.» (§9)",
+                sistematizar: "• Formulação de juízos e proposições.<br>• Exercício do entendimento e da vontade.<br>• Sensação redefinida como modo interno do pensamento."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 09",
+                question: "Podemos conhecer a mente através da Imaginação?",
+                sub: "Usar a imaginação ajuda a compreender mais claramente a natureza da *res cogitans*?",
+                img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop", // Sonho e Imagem
+                aprofundar: "Não. Imaginar é contemplar imagens de coisas corporais. Usar a imaginação para conhecer a mente seria como dormir de propósito para ver melhor.",
+                descartes: "«Reconheço que nada do que posso compreender com a ajuda da imaginação pertence ao conhecimento que tenho de mim. E, para que a mente possa perceber distintamente sua própria natureza, é preciso muito cuidado em mantê-la afastada da imaginação.» (§8)",
+                sistematizar: "• Distinção entre Intelecto e Imaginação.<br>• A imaginação liga-se aos corpos.<br>• Necessidade de afastar a imaginação para ter clareza."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 10",
+                question: "O Exemplo do Pedaço de Cera",
+                sub: "Quando a cera se aproxima do fogo e muda todas as suas propriedades sensíveis, a mesma cera permanece?",
+                img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=1000&auto=format&fit=crop", // Vela e Cera a arder
+                aprofundar: "Todas as qualidades sensíveis (cor, cheiro, figura, dureza) mudam, mas a cera permanece. Isto prova que a cera não é conhecida pelos sentidos.",
+                descartes: "«Tomemos, por exemplo, esta cera... é levada para perto do fogo: o sabor desvanece, o aroma se dissipa, a cor muda, desfaz-se a figura... A mesma cera ainda remanesce? Deve-se confessar que remanesce...» (§11-12)",
+                sistematizar: "• Mudança das qualidades secundárias/sensíveis.<br>• Permanência da cera como *res extensa*.<br>• Limite do conhecimento sensorial."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 11",
+                question: "Como apreendemos a Cera e o Mundo?",
+                sub: "É por um ato de ver, de tocar ou por uma inspeção do entendimento?",
+                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop", // Percepção e Visão
+                aprofundar: "A cera é apreendida como algo extenso, flexível e mutável por uma *inspectio mentis* (inspeção só da mente) e pela faculdade de julgar, tal como julgamos que da janela vemos homens e não autómatos.",
+                descartes: "«Sua percepção não é um ato de ver, de tocar, de imaginar... mas é uma inspeção só da mente... O que acreditava ver pelos olhos só compreendo pela faculdade de julgar que está em minha mente.» (§13-14)",
+                sistematizar: "• *Inspectio mentis* (Inspeção da Mente).<br>• Papel da Faculdade de Julgar.<br>• Metáfora dos autómatos e chapéus."
+            },
+            {
+                tag: "INVESTIGAÇÃO · 12",
+                question: "O que é mais fácil de conhecer: a Mente ou o Corpo?",
+                sub: "A qual da duas substâncias temos um acesso mais claro, evidente e imediato?",
+                img: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=1000&auto=format&fit=crop", // Conhecimento e Luz
+                aprofundar: "Qualquer perceção ou julgamento sobre corpos exteriores prova com muito maior evidência a existência da própria mente. A mente é mais conhecida que o corpo.",
+                descartes: "«Se julgo que a cera existe porque a vejo, resulta certamente, de maneira muito mais evidente, que eu também existo... nada pode ser por mim percebido mais facilmente e mais evidentemente do que minha mente.» (§16-18)",
+                sistematizar: "• Conclusão da Segunda Meditação.<br>• Superioridade epistemológica da *res cogitans*.<br>• Conhecimento do intelecto sobre os sentidos."
+            }
+        ];
+
+        let currentIdx = 4;
+        let activeTab = null;
+
+        function updateUI() {
+            const data = steps[currentIdx];
+            
+            document.getElementById("stepTag").innerText = data.tag;
+            document.getElementById("mainQuestion").innerText = data.question;
+            document.getElementById("subDescription").innerText = data.sub;
+            document.getElementById("cardImage").src = data.img;
+            document.getElementById("stepCounter").innerText = `${currentIdx + 1} / ${steps.length}`;
+            document.getElementById("stepSelect").value = currentIdx;
+
+            activeTab = null;
+            document.getElementById("displayBox").classList.remove("active");
+            document.querySelectorAll(".btn-toggle").forEach(btn => btn.classList.remove("active"));
+
+            document.getElementById("prevBtn").disabled = (currentIdx === 0);
+            document.getElementById("nextBtn").disabled = (currentIdx === steps.length - 1);
+        }
+
+        function toggleContent(type) {
+            const box = document.getElementById("displayBox");
+            const title = document.getElementById("boxTitle");
+            const text = document.getElementById("boxText");
+            const btns = document.querySelectorAll(".btn-toggle");
+
+            if (activeTab === type) {
+                box.classList.remove("active");
+                btns.forEach(b => b.classList.remove("active"));
+                activeTab = null;
+                return;
+            }
+
+            activeTab = type;
+            btns.forEach(b => b.classList.remove("active"));
+
+            const data = steps[currentIdx];
+
+            if (type === 'aprofundar') {
+                btns[0].classList.add("active");
+                title.innerText = "Aprofundar a Reflexão";
+                text.innerHTML = `<p>${data.aprofundar}</p>`;
+            } else if (type === 'descartes') {
+                btns[1].classList.add("active");
+                title.innerText = "Texto de René Descartes";
+                text.innerHTML = `<blockquote>${data.descartes}</blockquote>`;
+            } else if (type === 'sistematizar') {
+                btns[2].classList.add("active");
+                title.innerText = "Sistematização de Conceitos";
+                text.innerHTML = `<p>${data.sistematizar}</p>`;
+            }
+
+            box.classList.add("active");
+        }
+
+        function navigate(direction) {
+            currentIdx += direction;
+            if (currentIdx < 0) currentIdx = 0;
+            if (currentIdx >= steps.length) currentIdx = steps.length - 1;
+            updateUI();
+        }
+
+        function jumpToStep(val) {
+            currentIdx = parseInt(val);
+            updateUI();
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
